@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/db';
 import { lessons, modules, userEnrollments } from '@/db/postgres-schema';
-import { eq } from 'drizzle-orm';
+import { eq, and } from 'drizzle-orm';
 import { auth } from '@/lib/auth';
 import { headers } from 'next/headers';
 
@@ -103,12 +103,12 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const module = await db.select()
+    const moduleRecord = await db.select()
       .from(modules)
       .where(eq(modules.id, lessonData.moduleId))
       .limit(1);
 
-    if (module.length === 0) {
+    if (moduleRecord.length === 0) {
       return NextResponse.json(
         { 
           error: 'Module not found',
@@ -118,7 +118,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const moduleData = module[0];
+    const moduleData = moduleRecord[0];
 
     if (!moduleData.courseId) {
       return NextResponse.json(
@@ -133,8 +133,12 @@ export async function POST(request: NextRequest) {
     // Check if user is enrolled in the course
     const enrollment = await db.select()
       .from(userEnrollments)
-      .where(eq(userEnrollments.userId, userId))
-      .where(eq(userEnrollments.courseId, moduleData.courseId))
+      .where(
+        and(
+          eq(userEnrollments.userId, userId),
+          eq(userEnrollments.courseId, moduleData.courseId)
+        )
+      )
       .limit(1);
 
     if (enrollment.length === 0) {

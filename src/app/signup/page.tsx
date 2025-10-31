@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
@@ -12,24 +12,11 @@ import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 import { Logo } from "@/components/Logo";
 import { motion } from "framer-motion";
-
-type ErrorTypes = Partial<Record<keyof typeof authClient.$ERROR_CODES, string>>;
-
-const errorCodes = {
-  USER_ALREADY_EXISTS: "An account with this email already exists",
-  INVALID_EMAIL: "Please enter a valid email address",
-  WEAK_PASSWORD: "Password must be at least 8 characters",
-} satisfies ErrorTypes;
-
-const getErrorMessage = (code: string) => {
-  if (code in errorCodes) {
-    return errorCodes[code as keyof typeof errorCodes];
-  }
-  return "Registration failed. Please try again.";
-};
+import { useI18n } from "@/lib/i18n";
 
 export default function SignupPage() {
   const router = useRouter();
+  const { t } = useI18n();
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
@@ -38,16 +25,32 @@ export default function SignupPage() {
     confirmPassword: "",
   });
 
+  const errorMessages = useMemo(
+    () => ({
+      USER_ALREADY_EXISTS: t("auth.errors.userExists"),
+      INVALID_EMAIL: t("auth.errors.invalidEmail"),
+      WEAK_PASSWORD: t("auth.errors.passwordTooShort"),
+    }),
+    [t]
+  );
+
+  const getErrorMessage = (code: string) => {
+    if (code && code in errorMessages) {
+      return errorMessages[code as keyof typeof errorMessages];
+    }
+    return t("auth.errors.generic");
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (formData.password !== formData.confirmPassword) {
-      toast.error("Passwords do not match");
+      toast.error(t("auth.errors.passwordMismatch"));
       return;
     }
 
     if (formData.password.length < 8) {
-      toast.error("Password must be at least 8 characters");
+      toast.error(t("auth.errors.passwordTooShort"));
       return;
     }
 
@@ -65,10 +68,10 @@ export default function SignupPage() {
         return;
       }
 
-      toast.success("Account created successfully!");
+      toast.success(t("auth.toast.signupSuccess"));
       router.push("/login?registered=true");
     } catch (err) {
-      toast.error("An error occurred. Please try again.");
+      toast.error(t("auth.errors.generic"));
       console.error(err);
     } finally {
       setIsLoading(false);
@@ -118,17 +121,17 @@ export default function SignupPage() {
             >
               <Logo showText={false} />
             </motion.div>
-            <CardTitle className="text-2xl">Create Your Account</CardTitle>
-            <CardDescription>Start your Lingala learning journey today</CardDescription>
+            <CardTitle className="text-2xl">{t("auth.signup.title")}</CardTitle>
+            <CardDescription>{t("auth.signup.subtitle")}</CardDescription>
           </CardHeader>
           <form onSubmit={handleSubmit}>
             <CardContent className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="name">Full Name</Label>
+                <Label htmlFor="name">{t("auth.signup.nameLabel")}</Label>
                 <Input
                   id="name"
                   type="text"
-                  placeholder="John Doe"
+                  placeholder={t("auth.placeholders.name")}
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   required
@@ -136,11 +139,11 @@ export default function SignupPage() {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="email">{t("auth.signup.emailLabel")}</Label>
                 <Input
                   id="email"
                   type="email"
-                  placeholder="you@example.com"
+                  placeholder={t("auth.placeholders.email")}
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   required
@@ -148,11 +151,11 @@ export default function SignupPage() {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="password">Password</Label>
+                <Label htmlFor="password">{t("auth.signup.passwordLabel")}</Label>
                 <Input
                   id="password"
                   type="password"
-                  placeholder="••••••••"
+                  placeholder={t("auth.placeholders.password")}
                   value={formData.password}
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                   required
@@ -160,15 +163,15 @@ export default function SignupPage() {
                   minLength={8}
                 />
                 <p className="text-xs text-muted-foreground">
-                  Must be at least 8 characters
+                  {t("auth.signup.passwordHelper")}
                 </p>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="confirmPassword">Confirm Password</Label>
+                <Label htmlFor="confirmPassword">{t("auth.signup.confirmPasswordLabel")}</Label>
                 <Input
                   id="confirmPassword"
                   type="password"
-                  placeholder="••••••••"
+                  placeholder={t("auth.placeholders.password")}
                   value={formData.confirmPassword}
                   onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
                   required
@@ -181,26 +184,26 @@ export default function SignupPage() {
                 {isLoading ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Creating account...
+                    {t("auth.signup.cta.loading")}
                   </>
                 ) : (
-                  "Create Account"
+                  t("auth.signup.cta.primary")
                 )}
               </Button>
               <p className="text-xs text-center text-muted-foreground">
-                By signing up, you agree to our{" "}
+                {t("auth.signup.termsText")}{" "}
                 <Link href="/terms" className="text-primary hover:underline">
-                  Terms of Service
+                  {t("auth.signup.termsLink")}
                 </Link>{" "}
-                and{" "}
+                {t("auth.signup.and")}{" "}
                 <Link href="/privacy" className="text-primary hover:underline">
-                  Privacy Policy
+                  {t("auth.signup.privacyLink")}
                 </Link>
               </p>
               <div className="text-center text-sm text-muted-foreground">
-                Already have an account?{" "}
+                {t("auth.signup.alreadyHaveAccount")}{" "}
                 <Link href="/login" className="text-primary hover:underline font-medium">
-                  Sign in
+                  {t("auth.signup.signIn")}
                 </Link>
               </div>
             </CardFooter>

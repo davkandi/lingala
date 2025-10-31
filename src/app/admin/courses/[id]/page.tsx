@@ -39,6 +39,7 @@ import {
   File,
 } from "lucide-react";
 import { toast } from "sonner";
+import type { DragEndEvent } from "@dnd-kit/core";
 import {
   DndContext,
   closestCenter,
@@ -46,7 +47,6 @@ import {
   PointerSensor,
   useSensor,
   useSensors,
-  DragEndEvent,
 } from "@dnd-kit/core";
 import {
   arrayMove,
@@ -67,6 +67,7 @@ interface Lesson {
   durationMinutes: number | null;
   freePreview: boolean;
   createdAt: string;
+  sourceLanguage: string;
 }
 
 interface Module {
@@ -76,6 +77,7 @@ interface Module {
   description: string | null;
   orderIndex: number | null;
   createdAt: string;
+  sourceLanguage: string;
   lessons: Lesson[];
 }
 
@@ -85,6 +87,7 @@ interface Course {
   description: string | null;
   level: string | null;
   language: string | null;
+  sourceLanguage: string;
   thumbnailUrl: string | null;
   price: number | null;
   isPublished: boolean;

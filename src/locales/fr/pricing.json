@@ -1,0 +1,61 @@
+{
+  "badge": "Tarifs",
+  "title": "Choisissez Votre Plan d'Apprentissage",
+  "subtitle": "Commencez à apprendre gratuitement ou passez à la version supérieure pour débloquer toutes les fonctionnalités et tous les cours.",
+  "plans": {
+    "free": {
+      "name": "Gratuit",
+      "description": "Parfait pour commencer",
+      "cta": "Commencer"
+    },
+    "pro": {
+      "name": "Pro",
+      "description": "Idéal pour les apprenants sérieux",
+      "cta": "Commencer l'Essai Pro"
+    },
+    "enterprise": {
+      "name": "Enterprise",
+      "description": "Pour les équipes et les organisations",
+      "cta": "Contacter les Ventes"
+    },
+    "month": "/mois",
+    "mostPopular": "Le Plus Populaire"
+  },
+  "features": {
+    "accessBeginner": "Accès à 3 cours débutants",
+    "basicMaterials": "Supports d'apprentissage de base",
+    "communityForum": "Accès au forum communautaire",
+    "progressTracking": "Suivi des progrès",
+    "accessAllCourses": "Accès à tous les cours",
+    "allMaterials": "Tous les supports d'apprentissage",
+    "prioritySupport": "Support prioritaire",
+    "certificates": "Certificats de réussite",
+    "offlineDownloads": "Téléchargements hors ligne",
+    "liveQA": "Sessions de questions-réponses en direct",
+    "personalDashboard": "Tableau de bord de progrès personnel",
+    "everythingPro": "Tout dans Pro",
+    "teamMembers": "Jusqu'à 50 membres d'équipe",
+    "customPaths": "Parcours d'apprentissage personnalisés",
+    "accountManager": "Gestionnaire de compte dédié",
+    "analytics": "Analyses avancées",
+    "apiAccess": "Accès API",
+    "whiteLabel": "Options de marque blanche",
+    "bulkLicensing": "Remises sur licences groupées"
+  },
+  "faq": {
+    "title": "Questions Fréquemment Posées",
+    "q1": "Puis-je changer de plan plus tard?",
+    "a1": "Oui! Vous pouvez passer à un plan supérieur ou inférieur à tout moment. Les modifications prennent effet immédiatement.",
+    "q2": "Quels modes de paiement acceptez-vous?",
+    "a2": "Nous acceptons toutes les principales cartes de crédit, PayPal et les virements bancaires pour les plans d'entreprise.",
+    "q3": "Y a-t-il une politique de remboursement?",
+    "a3": "Oui, nous offrons une garantie de remboursement de 30 jours. Si vous n'êtes pas satisfait, nous rembourserons votre achat.",
+    "q4": "Offrez-vous des réductions pour les étudiants?",
+    "a4": "Oui! Les étudiants bénéficient de 50% de réduction sur les plans Pro. Contactez le support avec une carte d'étudiant valide pour obtenir le code de réduction."
+  },
+  "cta": {
+    "title": "Vous avez encore des questions?",
+    "subtitle": "Notre équipe est là pour vous aider. Contactez-nous pour plus d'informations.",
+    "contact": "Contacter le Support"
+  }
+}

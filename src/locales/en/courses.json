@@ -1,0 +1,43 @@
+{
+  "badge": "Our Courses",
+  "title": "Explore Lingala Courses",
+  "subtitle": "Master Lingala with our expertly designed courses. From complete beginners to advanced learners, we have the perfect path for your language journey.",
+  "stats": {
+    "students": "1,000+ Students",
+    "instructors": "Expert Instructors",
+    "rating": "4.9 Average Rating"
+  },
+  "filters": {
+    "allLevels": "All Levels",
+    "beginner": "Beginner",
+    "intermediate": "Intermediate",
+    "advanced": "Advanced"
+  },
+  "modules": "modules",
+  "lessons": "lessons",
+  "level": "level",
+  "oneTimePayment": "One-time payment",
+  "viewCourse": "View Course",
+  "noCourses": "No courses found",
+  "noCoursesDesc": "Try selecting a different level to see available courses.",
+  "pricingLabel": "Premium",
+  "pricingDescription": "$29.99/month subscription",
+  "benefits": {
+    "title": "What You'll Get",
+    "subtitle": "Every course includes everything you need to succeed in your language learning journey.",
+    "lifetimeAccess": "Lifetime Access",
+    "lifetimeAccessDesc": "Learn at your own pace with unlimited access to all course materials",
+    "certificate": "Certificate",
+    "certificateDesc": "Earn a certificate of completion to showcase your achievement",
+    "videoLessons": "Video Lessons",
+    "videoLessonsDesc": "Interactive high-quality video lessons with expert instructors",
+    "resources": "Resources",
+    "resourcesDesc": "Downloadable materials, exercises, and practice worksheets"
+  },
+  "errors": {
+    "load": "Failed to load courses. Please try again later."
+  },
+  "actions": {
+    "retry": "Try Again"
+  }
+}

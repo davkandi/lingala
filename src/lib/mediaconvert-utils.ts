@@ -3,8 +3,6 @@ import {
   GetJobCommand,
   ListJobsCommand,
   CancelJobCommand,
-  MediaConvertClient,
-  Job,
   JobStatus,
 } from '@aws-sdk/client-mediaconvert';
 import { mediaConvertClient, AWS_CONFIG } from './aws-config';

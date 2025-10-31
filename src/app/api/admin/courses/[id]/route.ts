@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { requireAdmin } from '@/lib/admin-auth';
 import { db } from '@/db';
 import { courses, modules, lessons, lessonMaterials } from '@/db/postgres-schema';
-import { eq, asc } from 'drizzle-orm';
+import { eq, asc, and, inArray } from 'drizzle-orm';
 
 export async function GET(
   request: NextRequest,
@@ -35,14 +35,24 @@ export async function GET(
 
     const courseModules = await db.select()
       .from(modules)
-      .where(eq(modules.courseId, courseId))
+      .where(
+        and(
+          eq(modules.courseId, courseId),
+          eq(modules.sourceLanguage, course[0].sourceLanguage)
+        )
+      )
       .orderBy(asc(modules.orderIndex));
 
     const modulesWithLessons = await Promise.all(
       courseModules.map(async (module) => {
         const moduleLessons = await db.select()
           .from(lessons)
-          .where(eq(lessons.moduleId, module.id))
+          .where(
+            and(
+              eq(lessons.moduleId, module.id),
+              eq(lessons.sourceLanguage, course[0].sourceLanguage)
+            )
+          )
           .orderBy(asc(lessons.orderIndex));
 
         return {
@@ -92,7 +102,7 @@ export async function PATCH(
     }
 
     const body = await request.json();
-    const { title, description, level, language, thumbnailUrl, price, isPublished } = body;
+    const { title, description, level, language, sourceLanguage, thumbnailUrl, price, isPublished } = body;
 
     const existingCourse = await db.select()
       .from(courses)
@@ -110,10 +120,20 @@ export async function PATCH(
       updatedAt: new Date()
     };
 
+    let normalizedSourceLanguage: "en" | "fr" | null = null;
+    let shouldSyncChildLanguages = false;
+
     if (title !== undefined) updateData.title = title.trim();
     if (description !== undefined) updateData.description = description;
     if (level !== undefined) updateData.level = level;
     if (language !== undefined) updateData.language = language;
+    if (sourceLanguage !== undefined) {
+      normalizedSourceLanguage = sourceLanguage === 'fr' ? 'fr' : 'en';
+      updateData.sourceLanguage = normalizedSourceLanguage;
+      if (normalizedSourceLanguage !== existingCourse[0].sourceLanguage) {
+        shouldSyncChildLanguages = true;
+      }
+    }
     if (thumbnailUrl !== undefined) updateData.thumbnailUrl = thumbnailUrl;
     if (price !== undefined) updateData.price = price;
     if (isPublished !== undefined) updateData.isPublished = isPublished;
@@ -128,6 +148,23 @@ export async function PATCH(
         { error: 'Failed to update course', code: 'UPDATE_FAILED' },
         { status: 500 }
       );
+    }
+
+    if (shouldSyncChildLanguages && normalizedSourceLanguage) {
+      await db.update(modules)
+        .set({ sourceLanguage: normalizedSourceLanguage })
+        .where(eq(modules.courseId, courseId));
+
+      const moduleIds = await db
+        .select({ id: modules.id })
+        .from(modules)
+        .where(eq(modules.courseId, courseId));
+
+      if (moduleIds.length > 0) {
+        await db.update(lessons)
+          .set({ sourceLanguage: normalizedSourceLanguage })
+          .where(inArray(lessons.moduleId, moduleIds.map((module) => module.id)));
+      }
     }
 
     return NextResponse.json(updatedCourse[0], { status: 200 });
@@ -187,10 +224,10 @@ export async function DELETE(
       .from(modules)
       .where(eq(modules.courseId, courseId));
 
-    for (const module of courseModules) {
+    for (const courseModule of courseModules) {
       const moduleLessons = await db.select()
         .from(lessons)
-        .where(eq(lessons.moduleId, module.id));
+        .where(eq(lessons.moduleId, courseModule.id));
 
       for (const lesson of moduleLessons) {
         const deletedMaterials = await db.delete(lessonMaterials)
@@ -200,7 +237,7 @@ export async function DELETE(
       }
 
       const deletedLessons = await db.delete(lessons)
-        .where(eq(lessons.moduleId, module.id))
+        .where(eq(lessons.moduleId, courseModule.id))
         .returning();
       deletedCounts.lessons += deletedLessons.length;
     }

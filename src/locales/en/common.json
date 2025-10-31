@@ -1,0 +1,44 @@
+{
+  "nav": {
+    "courses": "Courses",
+    "pricing": "Pricing",
+    "about": "About",
+    "signIn": "Sign in",
+    "getStarted": "Get Started",
+    "dashboard": "Dashboard",
+    "profile": "Profile",
+    "signOut": "Sign out"
+  },
+  "footer": {
+    "description": "Master the Lingala language with our comprehensive online learning platform. Learn at your own pace with expert instructors.",
+    "platform": "Platform",
+    "resources": "Resources",
+    "legal": "Legal",
+    "courses": "Courses",
+    "pricing": "Pricing",
+    "about": "About Us",
+    "contact": "Contact",
+    "blog": "Blog",
+    "help": "Help Center",
+    "community": "Community",
+    "faq": "FAQs",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "cookies": "Cookie Policy",
+    "copyright": "All rights reserved."
+  },
+  "social": {
+    "facebook": "Facebook",
+    "twitter": "Twitter",
+    "instagram": "Instagram",
+    "youtube": "YouTube"
+  },
+  "language": {
+    "english": "English",
+    "french": "French"
+  },
+  "toast": {
+    "signOutError": "Failed to sign out",
+    "signOutSuccess": "Signed out successfully"
+  }
+}

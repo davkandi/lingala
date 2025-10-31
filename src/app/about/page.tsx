@@ -34,31 +34,31 @@ export default function AboutPage() {
 
   const team = [
     {
-      name: "Dr. Alain Mumbere",
-      role: "Founder & CEO",
-      bio: "Linguist and educator with 15+ years of experience teaching Lingala.",
       avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop",
+      nameKey: "about.team.members.alain.name",
+      roleKey: "about.team.members.alain.role",
+      bioKey: "about.team.members.alain.bio",
     },
     {
-      name: "Sarah Lumumba",
-      role: "Head of Curriculum",
-      bio: "Curriculum specialist focused on interactive language learning methodologies.",
       avatar: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&h=400&fit=crop",
+      nameKey: "about.team.members.sarah.name",
+      roleKey: "about.team.members.sarah.role",
+      bioKey: "about.team.members.sarah.bio",
     },
     {
-      name: "Pierre Kabila",
-      role: "Lead Instructor",
-      bio: "Native Lingala speaker and experienced language instructor.",
       avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop",
+      nameKey: "about.team.members.pierre.name",
+      roleKey: "about.team.members.pierre.role",
+      bioKey: "about.team.members.pierre.bio",
     },
   ];
 
   const milestones = [
-    { year: "2020", event: "Lingala.cd founded with a vision to make Lingala accessible online" },
-    { year: "2021", event: "Launched first 10 courses with over 1,000 students enrolled" },
-    { year: "2022", event: "Reached 5,000+ active learners across 50+ countries" },
-    { year: "2023", event: "Introduced live classes and earned 50+ 5-star reviews" },
-    { year: "2024", event: "10,000+ students and expanding to mobile platforms" },
+    { year: "2020", eventKey: "about.timeline.items.2020" },
+    { year: "2021", eventKey: "about.timeline.items.2021" },
+    { year: "2022", eventKey: "about.timeline.items.2022" },
+    { year: "2023", eventKey: "about.timeline.items.2023" },
+    { year: "2024", eventKey: "about.timeline.items.2024" },
   ];
 
   const containerVariants = {
@@ -243,17 +243,19 @@ export default function AboutPage() {
                 <CardHeader>
                   <motion.img
                     src={member.avatar}
-                    alt={member.name}
+                    alt={t(member.nameKey)}
                     className="w-32 h-32 rounded-full object-cover mx-auto mb-4 ring-4 ring-primary/20"
                     whileHover={{ scale: 1.05 }}
                   />
-                  <CardTitle className="text-center">{member.name}</CardTitle>
+                  <CardTitle className="text-center">{t(member.nameKey)}</CardTitle>
                   <CardDescription className="text-center text-primary font-medium">
-                    {member.role}
+                    {t(member.roleKey)}
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-center text-muted-foreground text-sm">{member.bio}</p>
+                  <p className="text-center text-muted-foreground text-sm">
+                    {t(member.bioKey)}
+                  </p>
                 </CardContent>
               </Card>
             </motion.div>
@@ -296,7 +298,7 @@ export default function AboutPage() {
                 </motion.div>
                 <Card className="flex-1 hover:shadow-lg transition-shadow border-2 hover:border-primary/30">
                   <CardContent className="pt-6">
-                    <p className="text-muted-foreground">{milestone.event}</p>
+                    <p className="text-muted-foreground">{t(milestone.eventKey)}</p>
                   </CardContent>
                 </Card>
               </motion.div>

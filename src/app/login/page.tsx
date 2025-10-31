@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
@@ -13,9 +13,11 @@ import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 import { Logo } from "@/components/Logo";
 import { motion } from "framer-motion";
+import { useI18n } from "@/lib/i18n";
 
 export default function LoginPage() {
   const router = useRouter();
+  const { t } = useI18n();
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
@@ -23,12 +25,21 @@ export default function LoginPage() {
     rememberMe: false,
   });
 
+  const errorMessages = useMemo(
+    () => ({
+      USER_NOT_FOUND: t("auth.errors.loginInvalid"),
+      INVALID_PASSWORD: t("auth.errors.loginInvalid"),
+      INVALID_EMAIL: t("auth.errors.invalidEmail"),
+    }),
+    [t]
+  );
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
 
     try {
-      const { error, data: session } = await authClient.signIn.email({
+      const { error } = await authClient.signIn.email({
         email: formData.email,
         password: formData.password,
         rememberMe: formData.rememberMe,
@@ -36,14 +47,15 @@ export default function LoginPage() {
       });
 
       if (error) {
-        toast.error("Invalid email or password");
+        const message = error.code ? errorMessages[error.code] : undefined;
+        toast.error(message ?? t("auth.errors.loginInvalid"));
         return;
       }
 
-      toast.success("Logged in successfully!");
+      toast.success(t("auth.toast.loginSuccess"));
       router.push("/dashboard");
     } catch (err) {
-      toast.error("An error occurred. Please try again.");
+      toast.error(t("auth.errors.generic"));
       console.error(err);
     } finally {
       setIsLoading(false);
@@ -93,17 +105,17 @@ export default function LoginPage() {
             >
               <Logo showText={false} />
             </motion.div>
-            <CardTitle className="text-2xl">Welcome Back</CardTitle>
-            <CardDescription>Sign in to continue your learning journey</CardDescription>
+            <CardTitle className="text-2xl">{t("auth.login.title")}</CardTitle>
+            <CardDescription>{t("auth.login.subtitle")}</CardDescription>
           </CardHeader>
           <form onSubmit={handleSubmit}>
             <CardContent className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="email">{t("auth.login.emailLabel")}</Label>
                 <Input
                   id="email"
                   type="email"
-                  placeholder="you@example.com"
+                  placeholder={t("auth.placeholders.email")}
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   required
@@ -112,18 +124,18 @@ export default function LoginPage() {
               </div>
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <Label htmlFor="password">Password</Label>
+                  <Label htmlFor="password">{t("auth.login.passwordLabel")}</Label>
                   <Link
                     href="/forgot-password"
                     className="text-sm text-primary hover:underline"
                   >
-                    Forgot password?
+                    {t("auth.login.forgotPassword")}
                   </Link>
                 </div>
                 <Input
                   id="password"
                   type="password"
-                  placeholder="••••••••"
+                  placeholder={t("auth.placeholders.password")}
                   value={formData.password}
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                   required
@@ -143,7 +155,7 @@ export default function LoginPage() {
                   htmlFor="remember"
                   className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                 >
-                  Remember me
+                  {t("auth.login.rememberMe")}
                 </label>
               </div>
             </CardContent>
@@ -152,16 +164,16 @@ export default function LoginPage() {
                 {isLoading ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Signing in...
+                    {t("auth.login.cta.loading")}
                   </>
                 ) : (
-                  "Sign In"
+                  t("auth.login.cta.primary")
                 )}
               </Button>
               <div className="text-center text-sm text-muted-foreground">
-                Don't have an account?{" "}
+                {t("auth.login.noAccount")}{" "}
                 <Link href="/signup" className="text-primary hover:underline font-medium">
-                  Sign up
+                  {t("auth.login.createAccount")}
                 </Link>
               </div>
             </CardFooter>

@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { toast } from 'sonner';
-import { Upload, X, File, Image, Video, FileText } from 'lucide-react';
+import { Upload, X, File, Image as ImageIcon, Video, FileText } from 'lucide-react';
 
 interface FileUploadProps {
   onUploadComplete?: (fileInfo: UploadedFile) => void;
@@ -121,7 +121,7 @@ export function FileUpload({
   };
 
   const getFileIcon = (type: string) => {
-    if (type.startsWith('image/')) return <Image className="w-5 h-5" />;
+    if (type.startsWith('image/')) return <ImageIcon className="w-5 h-5" />;
     if (type.startsWith('video/')) return <Video className="w-5 h-5" />;
     if (type === 'application/pdf') return <FileText className="w-5 h-5" />;
     return <File className="w-5 h-5" />;

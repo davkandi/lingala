@@ -1,0 +1,56 @@
+{
+  "badge": "À Propos",
+  "title": "Relier les personnes par la langue",
+  "subtitle": "Lingala.cd a pour mission de préserver, promouvoir et enseigner la belle langue lingala aux apprenants du monde entier grâce à l'enseignement en ligne innovant.",
+  "story": {
+    "title": "Notre Histoire",
+    "p1": "Fondé en 2020, Lingala.cd est né d'une simple observation : des millions de personnes à travers le monde souhaitaient apprendre ou se reconnecter avec la langue lingala, mais les ressources éducatives de qualité étaient rares et difficiles d'accès.",
+    "p2": "Notre fondateur, le Dr Alain Mumbere, linguiste et éducateur passionné, a imaginé une plateforme où chacun, partout, pourrait apprendre le lingala auprès de locuteurs natifs en utilisant des méthodes pédagogiques éprouvées et la technologie moderne.",
+    "p3": "Aujourd'hui, nous sommes fiers de servir plus de 10 000 étudiants actifs dans plus de 50 pays, en proposant des cours complets du niveau débutant au niveau avancé. Notre mission reste inchangée : rendre le lingala accessible à tous tout en préservant son riche patrimoine culturel."
+  },
+  "values": {
+    "badge": "Nos Valeurs",
+    "title": "Ce qui nous motive",
+    "mission": "Guidé par la mission",
+    "missionDesc": "Nous nous engageons à préserver et promouvoir la langue lingala dans le monde entier.",
+    "studentFocused": "Axé sur l'apprenant",
+    "studentFocusedDesc": "Chaque décision est centrée sur la meilleure expérience d'apprentissage possible.",
+    "community": "Communauté",
+    "communityDesc": "Nous croyons au pouvoir de la communauté pour enrichir l'apprentissage des langues.",
+    "innovation": "Innovation",
+    "innovationDesc": "Nous améliorons continuellement notre plateforme avec les dernières technologies éducatives."
+  },
+  "team": {
+    "badge": "Notre Équipe",
+    "title": "Rencontrez l'équipe",
+    "subtitle": "Des éducateurs passionnés et des experts linguistiques dédiés à votre réussite.",
+    "members": {
+      "alain": {
+        "name": "Dr Alain Mumbere",
+        "role": "Fondateur et PDG",
+        "bio": "Linguiste et éducateur avec plus de 15 ans d'expérience dans l'enseignement du lingala."
+      },
+      "sarah": {
+        "name": "Sarah Lumumba",
+        "role": "Responsable du programme",
+        "bio": "Spécialiste des programmes, experte en méthodologies d'apprentissage interactives."
+      },
+      "pierre": {
+        "name": "Pierre Kabila",
+        "role": "Instructeur principal",
+        "bio": "Locuteur natif de lingala et instructeur expérimenté."
+      }
+    }
+  },
+  "timeline": {
+    "badge": "Notre Parcours",
+    "title": "Moments clés",
+    "items": {
+      "2020": "Création de Lingala.cd avec la volonté de rendre le lingala accessible en ligne",
+      "2021": "Lancement des 10 premiers cours avec plus de 1 000 étudiants inscrits",
+      "2022": "Plus de 5 000 apprenants actifs dans plus de 50 pays",
+      "2023": "Introduction des cours en direct et de plus de 50 avis 5 étoiles",
+      "2024": "Plus de 10 000 étudiants et expansion vers les plateformes mobiles"
+    }
+  }
+}

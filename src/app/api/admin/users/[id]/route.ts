@@ -1,9 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { headers } from 'next/headers';
 import { db } from '@/db';
-import { user, userEnrollments, userProgress } from '@/db/postgres-schema';
+import { userEnrollments, userProgress } from '@/db/postgres-schema';
 import { eq } from 'drizzle-orm';
 import { validateAdmin } from '@/lib/admin-validation';
+import { authDb } from '@/lib/auth';
+import { user as authUser } from '@/db/auth-postgres-schema';
 
 export async function GET(
   request: NextRequest,
@@ -29,18 +31,19 @@ export async function GET(
       }, { status: 400 });
     }
 
-    const userRecord = await db.select({
-      id: user.id,
-      email: user.email,
-      name: user.name,
-      image: user.image,
-      emailVerified: user.emailVerified,
-      isAdmin: user.isAdmin,
-      createdAt: user.createdAt,
-      updatedAt: user.updatedAt
+    const userRecord = await authDb.select({
+      id: authUser.id,
+      email: authUser.email,
+      name: authUser.name,
+      image: authUser.image,
+      emailVerified: authUser.emailVerified,
+      isAdmin: authUser.isAdmin,
+      createdAt: authUser.createdAt,
+      updatedAt: authUser.updatedAt,
+      preferredLanguage: authUser.preferredLanguage,
     })
-      .from(user)
-      .where(eq(user.id, id))
+      .from(authUser)
+      .where(eq(authUser.id, id))
       .limit(1);
 
     if (userRecord.length === 0) {
@@ -86,9 +89,9 @@ export async function PATCH(
     const body = await request.json();
     const { name, email, is_admin } = body;
 
-    const existingUser = await db.select()
-      .from(user)
-      .where(eq(user.id, id))
+    const existingUser = await authDb.select()
+      .from(authUser)
+      .where(eq(authUser.id, id))
       .limit(1);
 
     if (existingUser.length === 0) {
@@ -106,9 +109,9 @@ export async function PATCH(
     }
 
     if (email) {
-      const emailExists = await db.select()
-        .from(user)
-        .where(eq(user.email, email.trim().toLowerCase()))
+      const emailExists = await authDb.select()
+        .from(authUser)
+        .where(eq(authUser.email, email.trim().toLowerCase()))
         .limit(1);
 
       if (emailExists.length > 0 && emailExists[0].id !== id) {
@@ -119,8 +122,8 @@ export async function PATCH(
       }
     }
 
-    const updateData: Record<string, any> = {
-      updatedAt: new Date().toISOString()
+    const updateData: Record<string, unknown> = {
+      updatedAt: new Date().toISOString(),
     };
 
     if (name !== undefined) {
@@ -132,21 +135,22 @@ export async function PATCH(
     }
 
     if (is_admin !== undefined) {
-      updateData.isAdmin = is_admin ? 1 : 0;
+      updateData.isAdmin = !!is_admin;
     }
 
-    const updatedUser = await db.update(user)
+    const updatedUser = await authDb.update(authUser)
       .set(updateData)
-      .where(eq(user.id, id))
+      .where(eq(authUser.id, id))
       .returning({
-        id: user.id,
-        email: user.email,
-        name: user.name,
-        image: user.image,
-        emailVerified: user.emailVerified,
-        isAdmin: user.isAdmin,
-        createdAt: user.createdAt,
-        updatedAt: user.updatedAt
+        id: authUser.id,
+        email: authUser.email,
+        name: authUser.name,
+        image: authUser.image,
+        emailVerified: authUser.emailVerified,
+        isAdmin: authUser.isAdmin,
+        createdAt: authUser.createdAt,
+        updatedAt: authUser.updatedAt,
+        preferredLanguage: authUser.preferredLanguage,
       });
 
     if (updatedUser.length === 0) {
@@ -189,9 +193,9 @@ export async function DELETE(
       }, { status: 400 });
     }
 
-    const existingUser = await db.select()
-      .from(user)
-      .where(eq(user.id, id))
+    const existingUser = await authDb.select()
+      .from(authUser)
+      .where(eq(authUser.id, id))
       .limit(1);
 
     if (existingUser.length === 0) {
@@ -202,17 +206,17 @@ export async function DELETE(
     }
 
     await db.delete(userProgress)
-      .where(eq(userProgress.userId, parseInt(id)));
+      .where(eq(userProgress.userId, id));
 
     await db.delete(userEnrollments)
-      .where(eq(userEnrollments.userId, parseInt(id)));
+      .where(eq(userEnrollments.userId, id));
 
-    const deletedUser = await db.delete(user)
-      .where(eq(user.id, id))
+    const deletedUser = await authDb.delete(authUser)
+      .where(eq(authUser.id, id))
       .returning({
-        id: user.id,
-        email: user.email,
-        name: user.name
+        id: authUser.id,
+        email: authUser.email,
+        name: authUser.name,
       });
 
     if (deletedUser.length === 0) {

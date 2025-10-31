@@ -10,10 +10,10 @@ export function Footer() {
   const currentYear = new Date().getFullYear();
 
   const socialLinks = [
-    { icon: Facebook, href: "https://facebook.com", label: "Facebook" },
-    { icon: Twitter, href: "https://twitter.com", label: "Twitter" },
-    { icon: Instagram, href: "https://instagram.com", label: "Instagram" },
-    { icon: Youtube, href: "https://youtube.com", label: "YouTube" },
+    { icon: Facebook, href: "https://facebook.com", label: t("common.social.facebook") },
+    { icon: Twitter, href: "https://twitter.com", label: t("common.social.twitter") },
+    { icon: Instagram, href: "https://instagram.com", label: t("common.social.instagram") },
+    { icon: Youtube, href: "https://youtube.com", label: t("common.social.youtube") },
   ];
 
   return (
@@ -24,7 +24,7 @@ export function Footer() {
           <div className="lg:col-span-2 space-y-4">
             <Logo />
             <p className="text-sm text-muted-foreground max-w-xs">
-              {t("footer.description")}
+              {t("common.footer.description")}
             </p>
             <div className="flex items-center gap-3">
               {socialLinks.map((social) => (
@@ -44,14 +44,14 @@ export function Footer() {
 
           {/* Platform Links */}
           <div className="space-y-4">
-            <h3 className="font-semibold text-sm">{t("footer.platform")}</h3>
+            <h3 className="font-semibold text-sm">{t("common.footer.platform")}</h3>
             <ul className="space-y-3">
               <li>
                 <Link
                   href="/courses"
                   className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  {t("footer.courses")}
+                  {t("common.footer.courses")}
                 </Link>
               </li>
               <li>
@@ -59,7 +59,7 @@ export function Footer() {
                   href="/pricing"
                   className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  {t("footer.pricing")}
+                  {t("common.footer.pricing")}
                 </Link>
               </li>
               <li>
@@ -67,7 +67,7 @@ export function Footer() {
                   href="/about"
                   className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  {t("footer.about")}
+                  {t("common.footer.about")}
                 </Link>
               </li>
               <li>
@@ -75,7 +75,7 @@ export function Footer() {
                   href="/contact"
                   className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  {t("footer.contact")}
+                  {t("common.footer.contact")}
                 </Link>
               </li>
             </ul>
@@ -83,14 +83,14 @@ export function Footer() {
 
           {/* Resources Links */}
           <div className="space-y-4">
-            <h3 className="font-semibold text-sm">{t("footer.resources")}</h3>
+            <h3 className="font-semibold text-sm">{t("common.footer.resources")}</h3>
             <ul className="space-y-3">
               <li>
                 <Link
                   href="/blog"
                   className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  {t("footer.blog")}
+                  {t("common.footer.blog")}
                 </Link>
               </li>
               <li>
@@ -98,7 +98,7 @@ export function Footer() {
                   href="/help"
                   className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  {t("footer.help")}
+                  {t("common.footer.help")}
                 </Link>
               </li>
               <li>
@@ -106,7 +106,7 @@ export function Footer() {
                   href="/community"
                   className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  {t("footer.community")}
+                  {t("common.footer.community")}
                 </Link>
               </li>
               <li>
@@ -114,7 +114,7 @@ export function Footer() {
                   href="/faq"
                   className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  {t("footer.faq")}
+                  {t("common.footer.faq")}
                 </Link>
               </li>
             </ul>
@@ -122,14 +122,14 @@ export function Footer() {
 
           {/* Legal Links */}
           <div className="space-y-4">
-            <h3 className="font-semibold text-sm">{t("footer.legal")}</h3>
+            <h3 className="font-semibold text-sm">{t("common.footer.legal")}</h3>
             <ul className="space-y-3">
               <li>
                 <Link
                   href="/privacy"
                   className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  {t("footer.privacy")}
+                  {t("common.footer.privacy")}
                 </Link>
               </li>
               <li>
@@ -137,7 +137,7 @@ export function Footer() {
                   href="/terms"
                   className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  {t("footer.terms")}
+                  {t("common.footer.terms")}
                 </Link>
               </li>
               <li>
@@ -145,7 +145,7 @@ export function Footer() {
                   href="/cookies"
                   className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  {t("footer.cookies")}
+                  {t("common.footer.cookies")}
                 </Link>
               </li>
             </ul>
@@ -156,7 +156,7 @@ export function Footer() {
         <div className="mt-12 pt-8 border-t">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-sm text-muted-foreground">
-              © {currentYear} Lingala.cd. {t("footer.copyright")}
+              © {currentYear} Lingala.cd. {t("common.footer.copyright")}
             </p>
             <div className="flex items-center gap-2">
               <Mail className="w-4 h-4 text-muted-foreground" />

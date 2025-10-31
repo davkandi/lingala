@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 
 export function LanguageToggle() {
-  const { language, setLanguage } = useI18n();
+  const { language, setLanguage, t, isLoading } = useI18n();
 
   return (
     <div className="flex items-center gap-2 bg-muted/50 rounded-lg p-1">
@@ -14,6 +14,9 @@ export function LanguageToggle() {
           variant={language === "en" ? "default" : "ghost"}
           size="sm"
           onClick={() => setLanguage("en")}
+          aria-pressed={language === "en"}
+          aria-label={t("common.language.english")}
+          disabled={isLoading}
           className="h-8 px-3 gap-2"
         >
           <span className="text-lg">🇺🇸</span>
@@ -25,6 +28,9 @@ export function LanguageToggle() {
           variant={language === "fr" ? "default" : "ghost"}
           size="sm"
           onClick={() => setLanguage("fr")}
+          aria-pressed={language === "fr"}
+          aria-label={t("common.language.french")}
+          disabled={isLoading}
           className="h-8 px-3 gap-2"
         >
           <span className="text-lg">🇫🇷</span>

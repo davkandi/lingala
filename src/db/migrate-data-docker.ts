@@ -1,19 +1,10 @@
 #!/usr/bin/env tsx
 
 import { drizzle } from 'drizzle-orm/libsql';
-import { createClient } from '@libsql/client';
 import * as sqliteSchema from './schema';
 import * as sqliteAuthSchema from './auth-schema';
 import { execSync } from 'child_process';
 import fs from 'fs';
-
-// Source SQLite connection (current)
-const sqliteClient = createClient({
-  url: process.env.TURSO_CONNECTION_URL!,
-  authToken: process.env.TURSO_AUTH_TOKEN!,
-});
-
-const sqliteDb = drizzle(sqliteClient, { schema: { ...sqliteSchema, ...sqliteAuthSchema } });
 
 function executePostgreSQLCommand(sql: string) {
   const tempFile = '/tmp/migration.sql';
@@ -38,7 +29,19 @@ function executePostgreSQLCommand(sql: string) {
 async function migrateData() {
   console.log('🚀 Starting data migration from SQLite to PostgreSQL...');
   
+  let sqliteClient: { close: () => Promise<void> | void } | null = null;
+
   try {
+    // eslint-disable-next-line import/no-unresolved
+    const { createClient } = await import('@libsql/client');
+
+    sqliteClient = createClient({
+      url: process.env.TURSO_CONNECTION_URL!,
+      authToken: process.env.TURSO_AUTH_TOKEN!,
+    });
+
+    const sqliteDb = drizzle(sqliteClient, { schema: { ...sqliteSchema, ...sqliteAuthSchema } });
+
     console.log('📝 Migrating authentication data...');
     
     // Migrate users from auth table
@@ -86,24 +89,24 @@ async function migrateData() {
     }
     
     // Migrate modules
-    const modules = await sqliteDb.select().from(sqliteSchema.modules);
-    if (modules.length > 0) {
-      console.log(`Migrating ${modules.length} modules...`);
-      for (const module of modules) {
+    const sqliteModules = await sqliteDb.select().from(sqliteSchema.modules);
+    if (sqliteModules.length > 0) {
+      console.log(`Migrating ${sqliteModules.length} modules...`);
+      for (const sqliteModule of sqliteModules) {
         const sql = `
           INSERT INTO modules (id, course_id, title, description, order_index, created_at)
-          VALUES (${module.id}, ${module.courseId}, '${module.title.replace(/'/g, "''")}', ${module.description ? `'${module.description.replace(/'/g, "''")}'` : 'NULL'}, ${module.orderIndex || 'NULL'}, '${new Date(module.createdAt).toISOString()}')
+          VALUES (${sqliteModule.id}, ${sqliteModule.courseId}, '${sqliteModule.title.replace(/'/g, "''")}', ${sqliteModule.description ? `'${sqliteModule.description.replace(/'/g, "''")}'` : 'NULL'}, ${sqliteModule.orderIndex || 'NULL'}, '${new Date(sqliteModule.createdAt).toISOString()}')
           ON CONFLICT (id) DO NOTHING;
         `;
         executePostgreSQLCommand(sql);
       }
     }
-    
+
     // Migrate lessons
-    const lessons = await sqliteDb.select().from(sqliteSchema.lessons);
-    if (lessons.length > 0) {
-      console.log(`Migrating ${lessons.length} lessons...`);
-      for (const lesson of lessons) {
+    const sqliteLessons = await sqliteDb.select().from(sqliteSchema.lessons);
+    if (sqliteLessons.length > 0) {
+      console.log(`Migrating ${sqliteLessons.length} lessons...`);
+      for (const lesson of sqliteLessons) {
         const sql = `
           INSERT INTO lessons (id, module_id, title, content, video_url, order_index, duration_minutes, free_preview, created_at)
           VALUES (${lesson.id}, ${lesson.moduleId}, '${lesson.title.replace(/'/g, "''")}', ${lesson.content ? `'${lesson.content.replace(/'/g, "''")}'` : 'NULL'}, ${lesson.videoUrl ? `'${lesson.videoUrl}'` : 'NULL'}, ${lesson.orderIndex || 'NULL'}, ${lesson.durationMinutes || 'NULL'}, ${lesson.freePreview || false}, '${new Date(lesson.createdAt).toISOString()}')
@@ -119,7 +122,9 @@ async function migrateData() {
     console.error('❌ Error during migration:', error);
     throw error;
   } finally {
-    await sqliteClient.close();
+    if (sqliteClient) {
+      await sqliteClient.close();
+    }
   }
 }
 

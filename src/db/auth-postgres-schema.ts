@@ -10,6 +10,7 @@ export const user = pgTable('user', {
   createdAt: timestamp('created_at').notNull().defaultNow(),
   updatedAt: timestamp('updated_at').notNull().defaultNow(),
   isAdmin: boolean('is_admin').default(false),
+  preferredLanguage: varchar('preferred_language', { length: 10 }).notNull().default('en'),
 });
 
 export const session = pgTable('session', {

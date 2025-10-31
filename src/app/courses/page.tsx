@@ -16,6 +16,7 @@ interface Course {
   description: string;
   level: string;
   language: string;
+  sourceLanguage: string;
   thumbnailUrl: string;
   price: number;
   moduleCount: number;
@@ -26,7 +27,7 @@ export default function CoursesPage() {
   const { t } = useI18n();
   const [courses, setCourses] = useState<Course[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [errorKey, setErrorKey] = useState<string | null>(null);
   const [selectedLevel, setSelectedLevel] = useState<string>("all");
 
   useEffect(() => {
@@ -34,15 +35,18 @@ export default function CoursesPage() {
   }, []);
 
   const fetchCourses = async () => {
+    setLoading(true);
+    setErrorKey(null);
+
     try {
       const response = await fetch("/api/courses");
       if (!response.ok) {
-        throw new Error("Failed to fetch courses");
+        throw new Error("FAILED_TO_FETCH_COURSES");
       }
       const data = await response.json();
       setCourses(data);
     } catch (err) {
-      setError("Failed to load courses. Please try again later.");
+      setErrorKey("courses.errors.load");
       console.error(err);
     } finally {
       setLoading(false);
@@ -211,23 +215,23 @@ export default function CoursesPage() {
         )}
 
         {/* Error State */}
-        {error && (
+        {errorKey && (
           <motion.div
             className="text-center py-16 max-w-md mx-auto"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
           >
             <div className="bg-destructive/10 border border-destructive/20 rounded-lg p-8 space-y-4">
-              <p className="text-destructive font-medium">{error}</p>
+              <p className="text-destructive font-medium">{t(errorKey)}</p>
               <Button onClick={fetchCourses} variant="destructive">
-                Try Again
+                {t("courses.actions.retry")}
               </Button>
             </div>
           </motion.div>
         )}
 
         {/* Courses Grid */}
-        {!loading && !error && (
+        {!loading && !errorKey && (
           <>
             {filteredCourses.length === 0 ? (
               <motion.div
@@ -316,8 +320,8 @@ export default function CoursesPage() {
                         
                         <CardFooter className="p-0 flex items-center justify-between gap-4 pt-6 border-t">
                           <div className="flex flex-col">
-                            <span className="text-2xl font-bold text-primary">Premium</span>
-                            <span className="text-xs text-muted-foreground">$29.99/month subscription</span>
+                            <span className="text-2xl font-bold text-primary">{t("courses.pricingLabel")}</span>
+                            <span className="text-xs text-muted-foreground">{t("courses.pricingDescription")}</span>
                           </div>
                           <Button asChild size="lg" className="shadow-md hover:shadow-lg transition-shadow">
                             <Link href={`/courses/${course.id}`}>

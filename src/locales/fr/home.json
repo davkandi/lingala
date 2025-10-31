@@ -1,0 +1,71 @@
+{
+  "badge": "Rejoignez plus de 10 000 apprenants dans le monde",
+  "hero": "Maîtrisez la",
+  "heroHighlight": "Langue Lingala",
+  "subtitle": "Apprenez le lingala en ligne avec des cours complets, des locuteurs natifs experts et des leçons interactives. Commencez votre voyage aujourd'hui!",
+  "getStartedFree": "Commencer Gratuitement",
+  "browseCourses": "Parcourir les Cours",
+  "noCreditCard": "Aucune carte bancaire requise",
+  "cancelAnytime": "Annulez à tout moment",
+  "support247": "Support 24/7",
+  "images": {
+    "heroAlt": "Personnes apprenant des langues ensemble",
+    "successAlt": "Étudiants célébrant leur réussite"
+  },
+  "stats": {
+    "activeStudents": "Étudiants Actifs",
+    "expertInstructors": "Instructeurs Experts",
+    "lessonsAvailable": "Leçons Disponibles",
+    "successRate": "Taux de Réussite"
+  },
+  "features": {
+    "badge": "Fonctionnalités",
+    "title": "Pourquoi Choisir",
+    "titleHighlight": "Lingala.cd?",
+    "subtitle": "Tout ce dont vous avez besoin pour maîtriser la langue lingala dans une plateforme complète.",
+    "comprehensiveCurriculum": "Programme Complet",
+    "comprehensiveCurriculumDesc": "Cours structurés du niveau débutant au niveau avancé avec des méthodes d'apprentissage éprouvées.",
+    "expertInstructors": "Instructeurs Experts",
+    "expertInstructorsDesc": "Apprenez auprès de locuteurs natifs et d'éducateurs linguistiques expérimentés.",
+    "learnAtYourPace": "Apprenez à Votre Rythme",
+    "learnAtYourPaceDesc": "Accédez aux cours 24h/24 et 7j/7 et étudiez selon votre propre emploi du temps.",
+    "certificate": "Certificat de Réussite",
+    "certificateDesc": "Obtenez des certificats en terminant les cours et en démontrant votre maîtrise.",
+    "interactiveLessons": "Leçons Interactives",
+    "interactiveLessonsDesc": "Entraînez-vous à parler, écouter, lire et écrire avec des exercices interactifs.",
+    "trackProgress": "Suivez Vos Progrès",
+    "trackProgressDesc": "Suivez votre parcours d'apprentissage avec un suivi détaillé des progrès."
+  },
+  "testimonials": {
+    "badge": "Témoignages",
+    "title": "Ce que disent nos étudiants",
+    "subtitle": "Des histoires réelles d'apprenants réels",
+    "items": {
+      "marie": {
+        "name": "Marie Kabila",
+        "role": "Professionnelle",
+        "content": "Lingala.cd m'a aidée à me reconnecter à mes racines. Les cours sont bien structurés et faciles à suivre."
+      },
+      "jeanPaul": {
+        "name": "Jean-Paul Mukendi",
+        "role": "Étudiant",
+        "content": "Les leçons interactives et les instructeurs natifs rendent l'apprentissage du lingala agréable et efficace."
+      },
+      "grace": {
+        "name": "Grace Tshimanga",
+        "role": "Enseignante",
+        "content": "En tant qu'éducatrice, j'apprécie l'approche pédagogique. Mes élèves adorent la plateforme!"
+      }
+    }
+  },
+  "cta": {
+    "badge": "Offre limitée",
+    "title": "Prêt à commencer votre",
+    "titleHighlight": "voyage d'apprentissage ?",
+    "subtitle": "Rejoignez des milliers d'étudiants qui maîtrisent le lingala. Commencez avec un essai gratuit et libérez votre potentiel dès aujourd'hui.",
+    "startLearning": "Commencer à apprendre",
+    "viewAllCourses": "Voir tous les cours",
+    "freeTrial": "Essai gratuit de 14 jours",
+    "noCommitments": "Sans engagement"
+  }
+}

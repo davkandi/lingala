@@ -11,6 +11,7 @@ import * as authSchema from '@/db/auth-postgres-schema';
 const authConnectionString = process.env.DATABASE_URL!;
 const authDbClient = postgres(authConnectionString, { prepare: false });
 const authDb = drizzle(authDbClient, { schema: authSchema });
+export { authDb };
  
 export const auth = betterAuth({
 	baseURL: process.env.BETTER_AUTH_URL || "http://localhost:3000",
@@ -20,6 +21,10 @@ export const auth = betterAuth({
 		usePlural: false,
 		schema: authSchema,
 	}),
+	trustedOrigins: [
+		"http://localhost:3001",
+		"http://192.168.0.31:3001",
+	],
 	emailAndPassword: {    
 		enabled: true
 	},
@@ -30,6 +35,11 @@ export const auth = betterAuth({
 				type: "boolean",
 				defaultValue: false,
 				input: false
+			},
+			preferredLanguage: {
+				type: "string",
+				defaultValue: "en",
+				input: true
 			}
 		}
 	},

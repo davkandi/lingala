@@ -30,6 +30,30 @@ export default function Home() {
     },
   };
 
+  const testimonialCards = [
+    {
+      avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop",
+      nameKey: "home.testimonials.items.marie.name",
+      roleKey: "home.testimonials.items.marie.role",
+      contentKey: "home.testimonials.items.marie.content",
+      rating: 5,
+    },
+    {
+      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop",
+      nameKey: "home.testimonials.items.jeanPaul.name",
+      roleKey: "home.testimonials.items.jeanPaul.role",
+      contentKey: "home.testimonials.items.jeanPaul.content",
+      rating: 5,
+    },
+    {
+      avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop",
+      nameKey: "home.testimonials.items.grace.name",
+      roleKey: "home.testimonials.items.grace.role",
+      contentKey: "home.testimonials.items.grace.content",
+      rating: 5,
+    },
+  ];
+
   return (
     <div className="flex flex-col overflow-hidden">
       {/* Hero Section */}
@@ -138,7 +162,7 @@ export default function Home() {
               <div className="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-primary/20">
                 <img
                   src="https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/object/public/project-uploads/3cc74cdd-742a-4783-b69d-82d3707e4a9a/generated_images/modern-educational-hero-image-showing-di-06bc65ba-20251025144256.jpg"
-                  alt="People learning languages together"
+                  alt={t("home.images.heroAlt")}
                   className="w-full h-auto"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
@@ -331,7 +355,7 @@ export default function Home() {
             <div className="relative rounded-2xl overflow-hidden shadow-2xl border-2 border-primary/10">
               <img
                 src="https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/object/public/project-uploads/3cc74cdd-742a-4783-b69d-82d3707e4a9a/generated_images/illustration-of-online-education-success-e30fd9d5-20251025144256.jpg"
-                alt="Students celebrating success"
+                alt={t("home.images.successAlt")}
                 className="w-full h-auto"
               />
             </div>
@@ -344,29 +368,7 @@ export default function Home() {
             viewport={{ once: true, margin: "-100px" }}
             variants={containerVariants}
           >
-            {[
-              {
-                name: "Marie Kabila",
-                role: "Business Professional",
-                content: "Lingala.cd helped me reconnect with my roots. The courses are well-structured and easy to follow.",
-                avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop",
-                rating: 5,
-              },
-              {
-                name: "Jean-Paul Mukendi",
-                role: "Student",
-                content: "The interactive lessons and native speaker instructors made learning Lingala enjoyable and effective.",
-                avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop",
-                rating: 5,
-              },
-              {
-                name: "Grace Tshimanga",
-                role: "Teacher",
-                content: "As an educator, I appreciate the pedagogical approach. My students love the platform!",
-                avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop",
-                rating: 5,
-              },
-            ].map((testimonial, index) => (
+            {testimonialCards.map((testimonial, index) => (
               <motion.div
                 key={index}
                 variants={itemVariants}
@@ -379,7 +381,7 @@ export default function Home() {
                       <div className="relative">
                         <img
                           src={testimonial.avatar}
-                          alt={testimonial.name}
+                          alt={t(testimonial.nameKey)}
                           className="w-14 h-14 rounded-full object-cover ring-2 ring-primary/20"
                         />
                         <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-primary rounded-full flex items-center justify-center">
@@ -387,8 +389,8 @@ export default function Home() {
                         </div>
                       </div>
                       <div>
-                        <CardTitle className="text-lg">{testimonial.name}</CardTitle>
-                        <CardDescription>{testimonial.role}</CardDescription>
+                        <CardTitle className="text-lg">{t(testimonial.nameKey)}</CardTitle>
+                        <CardDescription>{t(testimonial.roleKey)}</CardDescription>
                       </div>
                     </div>
                     <div className="flex gap-1 mb-4">
@@ -399,7 +401,7 @@ export default function Home() {
                   </CardHeader>
                   <CardContent>
                     <p className="text-muted-foreground leading-relaxed">
-                      "{testimonial.content}"
+                      "{t(testimonial.contentKey)}"
                     </p>
                   </CardContent>
                 </Card>

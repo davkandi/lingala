@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { FileUpload } from '@/components/admin/FileUpload';
-import { Upload, Search, Filter, Grid, List, Image, Video, FileText } from 'lucide-react';
+import { Upload, Search, Filter, Grid, List, Image as ImageIcon, Video, FileText } from 'lucide-react';
 
 interface UploadedFile {
   filename: string;
@@ -47,7 +47,7 @@ export default function MediaManagementPage() {
   };
 
   const getFileIcon = (type: string) => {
-    if (type.startsWith('image/')) return <Image className="w-6 h-6 text-blue-500" />;
+    if (type.startsWith('image/')) return <ImageIcon className="w-6 h-6 text-blue-500" />;
     if (type.startsWith('video/')) return <Video className="w-6 h-6 text-purple-500" />;
     if (type === 'application/pdf') return <FileText className="w-6 h-6 text-red-500" />;
     return <FileText className="w-6 h-6 text-gray-500" />;
@@ -132,7 +132,7 @@ export default function MediaManagementPage() {
                 <div className="grid md:grid-cols-3 gap-4">
                   <div className="space-y-2">
                     <div className="flex items-center gap-2">
-                      <Image className="w-5 h-5 text-blue-500" />
+                      <ImageIcon className="w-5 h-5 text-blue-500" />
                       <h3 className="font-semibold">Images</h3>
                     </div>
                     <ul className="text-sm text-muted-foreground space-y-1">

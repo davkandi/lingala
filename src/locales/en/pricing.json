@@ -1,0 +1,61 @@
+{
+  "badge": "Pricing",
+  "title": "Choose Your Learning Plan",
+  "subtitle": "Start learning for free or upgrade to unlock all features and courses.",
+  "plans": {
+    "free": {
+      "name": "Free",
+      "description": "Perfect for getting started",
+      "cta": "Get Started"
+    },
+    "pro": {
+      "name": "Pro",
+      "description": "Best for serious learners",
+      "cta": "Start Pro Trial"
+    },
+    "enterprise": {
+      "name": "Enterprise",
+      "description": "For teams and organizations",
+      "cta": "Contact Sales"
+    },
+    "month": "/month",
+    "mostPopular": "Most Popular"
+  },
+  "features": {
+    "accessBeginner": "Access to 3 beginner courses",
+    "basicMaterials": "Basic learning materials",
+    "communityForum": "Community forum access",
+    "progressTracking": "Progress tracking",
+    "accessAllCourses": "Access to all courses",
+    "allMaterials": "All learning materials",
+    "prioritySupport": "Priority support",
+    "certificates": "Certificates of completion",
+    "offlineDownloads": "Offline downloads",
+    "liveQA": "Live Q&A sessions",
+    "personalDashboard": "Personal progress dashboard",
+    "everythingPro": "Everything in Pro",
+    "teamMembers": "Up to 50 team members",
+    "customPaths": "Custom learning paths",
+    "accountManager": "Dedicated account manager",
+    "analytics": "Advanced analytics",
+    "apiAccess": "API access",
+    "whiteLabel": "White-label options",
+    "bulkLicensing": "Bulk licensing discounts"
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "q1": "Can I switch plans later?",
+    "a1": "Yes! You can upgrade or downgrade your plan at any time. Changes take effect immediately.",
+    "q2": "What payment methods do you accept?",
+    "a2": "We accept all major credit cards, PayPal, and bank transfers for enterprise plans.",
+    "q3": "Is there a refund policy?",
+    "a3": "Yes, we offer a 30-day money-back guarantee. If you're not satisfied, we'll refund your purchase.",
+    "q4": "Do you offer student discounts?",
+    "a4": "Yes! Students get 50% off Pro plans. Contact support with valid student ID for the discount code."
+  },
+  "cta": {
+    "title": "Still have questions?",
+    "subtitle": "Our team is here to help. Contact us for more information.",
+    "contact": "Contact Support"
+  }
+}

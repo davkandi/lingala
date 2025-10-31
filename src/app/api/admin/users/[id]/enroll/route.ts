@@ -1,8 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { headers } from 'next/headers';
 import { db } from '@/db';
-import { user, courses, userEnrollments } from '@/db/postgres-schema';
+import { courses, userEnrollments } from '@/db/postgres-schema';
 import { eq, and } from 'drizzle-orm';
+import { authDb } from '@/lib/auth';
+import { user as authUser } from '@/db/auth-postgres-schema';
 import { validateAdmin } from '@/lib/admin-validation';
 
 export async function POST(
@@ -40,10 +42,10 @@ export async function POST(
 
     const courseIdNum = parseInt(courseId.toString());
 
-    const existingUser = await db
+    const existingUser = await authDb
       .select()
-      .from(user)
-      .where(eq(user.id, userId))
+      .from(authUser)
+      .where(eq(authUser.id, userId))
       .limit(1);
 
     if (existingUser.length === 0) {

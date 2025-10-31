@@ -20,6 +20,7 @@ export const courses = sqliteTable('courses', {
   description: text('description'),
   level: text('level'),
   language: text('language'),
+  sourceLanguage: text('source_language').notNull().default('en'),
   thumbnailUrl: text('thumbnail_url'),
   price: real('price'),
   isPublished: integer('is_published', { mode: 'boolean' }).default(false),
@@ -33,6 +34,7 @@ export const modules = sqliteTable('modules', {
   title: text('title').notNull(),
   description: text('description'),
   orderIndex: integer('order_index'),
+  sourceLanguage: text('source_language').notNull().default('en'),
   createdAt: text('created_at').notNull(),
 });
 
@@ -45,6 +47,7 @@ export const lessons = sqliteTable('lessons', {
   orderIndex: integer('order_index'),
   durationMinutes: integer('duration_minutes'),
   freePreview: integer('free_preview', { mode: 'boolean' }).default(false),
+  sourceLanguage: text('source_language').notNull().default('en'),
   createdAt: text('created_at').notNull(),
 });
 

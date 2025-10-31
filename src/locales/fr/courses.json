@@ -1,0 +1,43 @@
+{
+  "badge": "Nos Cours",
+  "title": "Explorez les cours de lingala",
+  "subtitle": "Maîtrisez le lingala avec nos cours soigneusement conçus. Du grand débutant à l'apprenant avancé, trouvez le parcours idéal pour votre apprentissage linguistique.",
+  "stats": {
+    "students": "Plus de 1 000 étudiants",
+    "instructors": "Instructeurs experts",
+    "rating": "Note moyenne de 4,9"
+  },
+  "filters": {
+    "allLevels": "Tous niveaux",
+    "beginner": "Débutant",
+    "intermediate": "Intermédiaire",
+    "advanced": "Avancé"
+  },
+  "modules": "modules",
+  "lessons": "leçons",
+  "level": "niveau",
+  "oneTimePayment": "Paiement unique",
+  "viewCourse": "Voir le cours",
+  "noCourses": "Aucun cours trouvé",
+  "noCoursesDesc": "Essayez de sélectionner un autre niveau pour voir les cours disponibles.",
+  "pricingLabel": "Premium",
+  "pricingDescription": "Abonnement de 29,99 $/mois",
+  "benefits": {
+    "title": "Ce que vous obtiendrez",
+    "subtitle": "Chaque cours comprend tout ce dont vous avez besoin pour réussir votre apprentissage linguistique.",
+    "lifetimeAccess": "Accès à vie",
+    "lifetimeAccessDesc": "Apprenez à votre rythme avec un accès illimité à tous les supports de cours",
+    "certificate": "Certificat",
+    "certificateDesc": "Obtenez un certificat de réussite pour mettre en valeur votre progression",
+    "videoLessons": "Leçons vidéo",
+    "videoLessonsDesc": "Leçons vidéo interactives de haute qualité avec des instructeurs experts",
+    "resources": "Ressources",
+    "resourcesDesc": "Supports téléchargeables, exercices et fiches de pratique"
+  },
+  "errors": {
+    "load": "Impossible de charger les cours. Veuillez réessayer plus tard."
+  },
+  "actions": {
+    "retry": "Réessayer"
+  }
+}

@@ -51,6 +51,7 @@ interface Course {
   description: string | null;
   level: string | null;
   language: string | null;
+  sourceLanguage: string;
   thumbnailUrl: string | null;
   price: string | null;
   isPublished: boolean;
@@ -74,6 +75,7 @@ export default function CourseManagement() {
     description: "",
     level: "",
     language: "",
+    sourceLanguage: "en",
     thumbnailUrl: "",
     price: "",
     isPublished: false,
@@ -118,6 +120,7 @@ export default function CourseManagement() {
         description: course.description || "",
         level: course.level || "",
         language: course.language || "",
+        sourceLanguage: course.sourceLanguage || "en",
         thumbnailUrl: course.thumbnailUrl || "",
         price: course.price?.toString() || "",
         isPublished: course.isPublished,
@@ -129,6 +132,7 @@ export default function CourseManagement() {
         description: "",
         level: "",
         language: "",
+        sourceLanguage: "en",
         thumbnailUrl: "",
         price: "",
         isPublished: false,
@@ -164,6 +168,7 @@ export default function CourseManagement() {
           description: formData.description || null,
           level: formData.level || null,
           language: formData.language || null,
+          sourceLanguage: formData.sourceLanguage,
           thumbnailUrl: formData.thumbnailUrl || null,
           price: formData.price ? parseFloat(formData.price) : null,
           isPublished: formData.isPublished,
@@ -365,6 +370,22 @@ export default function CourseManagement() {
               </div>
 
               <div className="space-y-2">
+                <Label htmlFor="sourceLanguage">Content Source Language *</Label>
+                <Select
+                  value={formData.sourceLanguage}
+                  onValueChange={(value) => setFormData({ ...formData, sourceLanguage: value })}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select source language" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="en">English</SelectItem>
+                    <SelectItem value="fr">French</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="space-y-2">
                 <Label htmlFor="price">Price ($)</Label>
                 <Input
                   id="price"
@@ -507,6 +528,7 @@ export default function CourseManagement() {
                   <TableRow>
                     <TableHead>Title</TableHead>
                     <TableHead>Level</TableHead>
+                    <TableHead>Source</TableHead>
                     <TableHead>Price</TableHead>
                     <TableHead>Modules</TableHead>
                     <TableHead>Lessons</TableHead>
@@ -524,6 +546,11 @@ export default function CourseManagement() {
                         ) : (
                           <span className="text-muted-foreground">-</span>
                         )}
+                      </TableCell>
+                      <TableCell>
+                        <Badge variant="secondary" className="uppercase">
+                          {course.sourceLanguage}
+                        </Badge>
                       </TableCell>
                       <TableCell>
                         {course.price ? `$${parseFloat(course.price).toFixed(2)}` : <span className="text-muted-foreground">Free</span>}

@@ -9,7 +9,7 @@ export async function POST(request: NextRequest) {
     const admin = await requireAdmin(request);
 
     const body = await request.json();
-    const { courseId, title, description, orderIndex } = body;
+    const { courseId, title, description, orderIndex, sourceLanguage } = body;
 
     if (!courseId) {
       return NextResponse.json({ 
@@ -51,13 +51,18 @@ export async function POST(request: NextRequest) {
         : 1;
     }
 
+    const parentSourceLanguage = courseExists[0].sourceLanguage ?? 'en';
+    const normalizedSourceLanguage: "en" | "fr" =
+      sourceLanguage === 'fr' ? 'fr' : parentSourceLanguage === 'fr' ? 'fr' : 'en';
+
     const newModule = await db.insert(modules)
       .values({
         courseId: parseInt(courseId),
         title: title.trim(),
         description: description ? description.trim() : null,
         orderIndex: finalOrderIndex,
-        createdAt: new Date()
+        createdAt: new Date(),
+        sourceLanguage: normalizedSourceLanguage,
       })
       .returning();
 

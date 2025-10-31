@@ -53,3 +53,39 @@
   3. Target launch timeline and budget range for initial AWS spend?
   4. Should we support additional languages alongside Lingala from day one?
   5. Any partnerships/licensing requirements that influence user accounts, payments, or content rights?
+
+  • Phase 0 Focus (Functional First)
+
+  - Finalize Locale Support
+      - Extend src/lib/i18n.tsx to load English/French namespaces per route.
+      - Persist language toggle in cookie, sync with user profile setting on login.
+      - Audit marketing, learner, and admin screens to remove hard-coded copy; move strings into locale files.
+      - Tag course/module/lesson records with a sourceLanguage field so catalog and dashboards show the right content.
+  - Data & API Stabilization
+      - Commit to Postgres-only schema (clean up leftover SQLite definitions, verify Drizzle migrations).
+      - Optimize key routes—/api/courses, /api/enrollments, /api/progress—by batching/joining queries to eliminate N+1 calls and add pagination/caching metadata.
+      - Add zod validation for request/response payloads plus integration tests for bilingual course listings and enrollment flows.
+  - Authentication & Organizations
+      - Harden Better Auth configuration (refresh tokens, password rules, email verification flow).
+      - Introduce organization entities (tables for organizations, members, seats, and subscriptions).
+      - Implement organization-aware dashboards and admin access checks; update /api/admin/** to enforce RBAC consistently.
+  - Media Pipeline MVP
+      - Implement Lambda/worker stub that can be invoked to submit MediaConvert jobs and update status fields (full automation can evolve later).
+      - Document manual steps for now (e.g., triggering MediaConvert) so videos can be delivered during Phase 0.
+  - User Experience Polish
+      - Ensure learner dashboard, progress tracking, quizzes, and course discovery work end-to-end in both languages.
+      - Add placeholder/test content for Lingala lessons targeted at English vs French speakers to prove segregation.
+      - Review admin tools (course builder, analytics) for critical gaps and make sure they respect language-specific content.
+  - Observability & Safeguards
+      - Add structured logging and error boundaries for major flows (auth, payments, media).
+  Sequencing
+
+  1. Localization expansion + content tagging.
+  2. Schema consolidation and API performance fixes.
+  3. Auth/organization model and UI updates.
+  4. Media upload + processing scaffold.
+  5. UX polish and bilingual content verification.
+  6. Logging/monitoring hooks and budget alarm setup.
+
+  We’ll revisit CI/CD (GitLab runner, Terraform pipeline, automated deploys) right after the app is fully functional and ready for staging. Let me know if you’d like a
+  detailed checklist or ticket breakdown for these items, or if you want to adjust the sequencing.

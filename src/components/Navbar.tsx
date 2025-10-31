@@ -39,19 +39,19 @@ export function Navbar() {
     });
 
     if (error?.code) {
-      toast.error("Failed to sign out");
+      toast.error(t("common.toast.signOutError"));
     } else {
       localStorage.removeItem("bearer_token");
       refetch();
       router.push("/");
-      toast.success("Signed out successfully");
+      toast.success(t("common.toast.signOutSuccess"));
     }
   };
 
   const navLinks = [
-    { href: "/courses", label: t("nav.courses") },
-    { href: "/pricing", label: t("nav.pricing") },
-    { href: "/about", label: t("nav.about") },
+    { href: "/courses", label: t("common.nav.courses") },
+    { href: "/pricing", label: t("common.nav.pricing") },
+    { href: "/about", label: t("common.nav.about") },
   ];
 
   return (
@@ -103,29 +103,29 @@ export function Navbar() {
                 <DropdownMenuItem asChild>
                   <Link href="/dashboard" className="cursor-pointer">
                     <BookOpen className="mr-2 h-4 w-4" />
-                    {t("nav.dashboard")}
+                    {t("common.nav.dashboard")}
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
                   <Link href="/dashboard/profile" className="cursor-pointer">
                     <User className="mr-2 h-4 w-4" />
-                    {t("nav.profile")}
+                    {t("common.nav.profile")}
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={handleSignOut} className="cursor-pointer text-destructive">
                   <LogOut className="mr-2 h-4 w-4" />
-                  {t("nav.signOut")}
+                  {t("common.nav.signOut")}
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (
             <>
               <Button variant="ghost" asChild>
-                <Link href="/login">{t("nav.signIn")}</Link>
+                <Link href="/login">{t("common.nav.signIn")}</Link>
               </Button>
               <Button asChild>
-                <Link href="/signup">{t("nav.getStarted")}</Link>
+                <Link href="/signup">{t("common.nav.getStarted")}</Link>
               </Button>
             </>
           )}
@@ -168,7 +168,7 @@ export function Navbar() {
                   <Button variant="outline" className="w-full justify-start" asChild>
                     <Link href="/dashboard" onClick={() => setMobileMenuOpen(false)}>
                       <BookOpen className="mr-2 h-4 w-4" />
-                      {t("nav.dashboard")}
+                      {t("common.nav.dashboard")}
                     </Link>
                   </Button>
                   <Button
@@ -180,19 +180,19 @@ export function Navbar() {
                     }}
                   >
                     <LogOut className="mr-2 h-4 w-4" />
-                    {t("nav.signOut")}
+                    {t("common.nav.signOut")}
                   </Button>
                 </>
               ) : (
                 <>
                   <Button variant="outline" className="w-full" asChild>
                     <Link href="/login" onClick={() => setMobileMenuOpen(false)}>
-                      {t("nav.signIn")}
+                      {t("common.nav.signIn")}
                     </Link>
                   </Button>
                   <Button className="w-full" asChild>
                     <Link href="/signup" onClick={() => setMobileMenuOpen(false)}>
-                      {t("nav.getStarted")}
+                      {t("common.nav.getStarted")}
                     </Link>
                   </Button>
                 </>

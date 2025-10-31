@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { headers } from 'next/headers';
-import { db } from '@/db';
-import { user, account } from '@/db/postgres-schema';
 import { eq, and } from 'drizzle-orm';
 import { validateAdmin } from '@/lib/admin-validation';
 import bcrypt from 'bcrypt';
+import { authDb } from '@/lib/auth';
+import { user as authUser, account } from '@/db/auth-postgres-schema';
 
 export async function POST(
   request: NextRequest,
@@ -46,10 +46,10 @@ export async function POST(
       );
     }
 
-    const existingUser = await db
+    const existingUser = await authDb
       .select()
-      .from(user)
-      .where(eq(user.id, userId))
+      .from(authUser)
+      .where(eq(authUser.id, userId))
       .limit(1);
 
     if (existingUser.length === 0) {
@@ -61,15 +61,14 @@ export async function POST(
 
     const hashedPassword = await bcrypt.hash(newPassword, 10);
 
-    await db
-      .update(user)
+    await authDb
+      .update(authUser)
       .set({
-        password: hashedPassword,
         updatedAt: new Date().toISOString()
       })
-      .where(eq(user.id, userId));
+      .where(eq(authUser.id, userId));
 
-    await db
+    await authDb
       .update(account)
       .set({
         password: hashedPassword,

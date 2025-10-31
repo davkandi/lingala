@@ -9,7 +9,7 @@ export async function POST(request: NextRequest) {
     const admin = await requireAdmin(request);
 
     const body = await request.json();
-    const { moduleId, title, content, videoUrl, orderIndex, durationMinutes, freePreview } = body;
+    const { moduleId, title, content, videoUrl, orderIndex, durationMinutes, freePreview, sourceLanguage } = body;
 
     if (!moduleId) {
       return NextResponse.json(
@@ -54,6 +54,10 @@ export async function POST(request: NextRequest) {
       }
     }
 
+    const parentSourceLanguage = moduleExists[0].sourceLanguage ?? 'en';
+    const normalizedSourceLanguage: "en" | "fr" =
+      sourceLanguage === 'fr' ? 'fr' : parentSourceLanguage === 'fr' ? 'fr' : 'en';
+
     const newLesson = await db
       .insert(lessons)
       .values({
@@ -64,6 +68,7 @@ export async function POST(request: NextRequest) {
         orderIndex: finalOrderIndex,
         durationMinutes: durationMinutes ? parseInt(durationMinutes) : null,
         freePreview: freePreview || false,
+        sourceLanguage: normalizedSourceLanguage,
         createdAt: new Date(),
       })
       .returning();

@@ -1,0 +1,44 @@
+{
+  "nav": {
+    "courses": "Cours",
+    "pricing": "Tarifs",
+    "about": "À Propos",
+    "signIn": "Se connecter",
+    "getStarted": "Commencer",
+    "dashboard": "Tableau de bord",
+    "profile": "Profil",
+    "signOut": "Se déconnecter"
+  },
+  "footer": {
+    "description": "Maîtrisez la langue lingala avec notre plateforme d'apprentissage en ligne complète. Apprenez à votre rythme avec des instructeurs experts.",
+    "platform": "Plateforme",
+    "resources": "Ressources",
+    "legal": "Légal",
+    "courses": "Cours",
+    "pricing": "Tarifs",
+    "about": "À Propos",
+    "contact": "Contact",
+    "blog": "Blog",
+    "help": "Centre d'Aide",
+    "community": "Communauté",
+    "faq": "FAQ",
+    "privacy": "Politique de Confidentialité",
+    "terms": "Conditions d'Utilisation",
+    "cookies": "Politique des Cookies",
+    "copyright": "Tous droits réservés."
+  },
+  "social": {
+    "facebook": "Facebook",
+    "twitter": "Twitter",
+    "instagram": "Instagram",
+    "youtube": "YouTube"
+  },
+  "language": {
+    "english": "Anglais",
+    "french": "Français"
+  },
+  "toast": {
+    "signOutError": "Échec de la déconnexion",
+    "signOutSuccess": "Déconnexion réussie"
+  }
+}

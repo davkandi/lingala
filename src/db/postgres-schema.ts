@@ -21,6 +21,7 @@ export const courses = pgTable('courses', {
   description: text('description'),
   level: varchar('level', { length: 50 }),
   language: varchar('language', { length: 50 }),
+  sourceLanguage: varchar('source_language', { length: 10 }).notNull().default('en'),
   thumbnailUrl: text('thumbnail_url'),
   price: decimal('price', { precision: 10, scale: 2 }),
   isPublished: boolean('is_published').default(false),
@@ -34,6 +35,7 @@ export const modules = pgTable('modules', {
   title: varchar('title', { length: 255 }).notNull(),
   description: text('description'),
   orderIndex: integer('order_index'),
+  sourceLanguage: varchar('source_language', { length: 10 }).notNull().default('en'),
   createdAt: timestamp('created_at').notNull().defaultNow(),
 });
 
@@ -46,6 +48,7 @@ export const lessons = pgTable('lessons', {
   orderIndex: integer('order_index'),
   durationMinutes: integer('duration_minutes'),
   freePreview: boolean('free_preview').default(false),
+  sourceLanguage: varchar('source_language', { length: 10 }).notNull().default('en'),
   createdAt: timestamp('created_at').notNull().defaultNow(),
 });
 

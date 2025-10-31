@@ -121,6 +121,7 @@ export async function GET(
         description: course.description,
         level: course.level,
         language: course.language,
+        sourceLanguage: course.sourceLanguage,
         thumbnailUrl: course.thumbnailUrl,
         price: course.price,
         isPublished: course.isPublished,

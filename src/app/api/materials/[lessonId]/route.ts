@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/db';
 import { lessons, modules, lessonMaterials, userEnrollments } from '@/db/postgres-schema';
-import { eq, asc } from 'drizzle-orm';
+import { eq, asc, and } from 'drizzle-orm';
 import { auth } from '@/lib/auth';
 import { headers } from 'next/headers';
 
@@ -44,12 +44,12 @@ export async function GET(
     const lessonData = lesson[0];
 
     // Get the lesson's module to find courseId
-    const module = await db.select()
+    const moduleRecord = await db.select()
       .from(modules)
       .where(eq(modules.id, lessonData.moduleId!))
       .limit(1);
 
-    if (module.length === 0) {
+    if (moduleRecord.length === 0) {
       return NextResponse.json(
         { 
           error: 'Module not found for this lesson',
@@ -59,7 +59,7 @@ export async function GET(
       );
     }
 
-    const courseId = module[0].courseId;
+    const courseId = moduleRecord[0].courseId;
 
     // Check if lesson has freePreview
     if (lessonData.freePreview === true) {
@@ -92,8 +92,12 @@ export async function GET(
     // Check if user is enrolled in the course
     const enrollment = await db.select()
       .from(userEnrollments)
-      .where(eq(userEnrollments.userId, userId))
-      .where(eq(userEnrollments.courseId, courseId!))
+      .where(
+        and(
+          eq(userEnrollments.userId, userId),
+          eq(userEnrollments.courseId, courseId!)
+        )
+      )
       .limit(1);
 
     if (enrollment.length === 0) {

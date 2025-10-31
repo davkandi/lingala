@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { requireAdmin } from '@/lib/admin-auth';
 import { db } from '@/db';
 import { courses, modules, lessons, courseMeta, courseCategories } from '@/db/postgres-schema';
-import { eq, sql, desc } from 'drizzle-orm';
+import { eq, sql, desc, and } from 'drizzle-orm';
 
 export async function GET(request: NextRequest) {
   try {
@@ -14,6 +14,7 @@ export async function GET(request: NextRequest) {
       description: courses.description,
       level: courses.level,
       language: courses.language,
+      sourceLanguage: courses.sourceLanguage,
       thumbnailUrl: courses.thumbnailUrl,
       price: courses.price,
       isPublished: courses.isPublished,
@@ -26,13 +27,23 @@ export async function GET(request: NextRequest) {
         const moduleCount = await db
           .select({ count: sql<number>`count(*)` })
           .from(modules)
-          .where(eq(modules.courseId, course.id));
+          .where(
+            and(
+              eq(modules.courseId, course.id),
+              eq(modules.sourceLanguage, course.sourceLanguage)
+            )
+          );
 
         const lessonCount = await db
           .select({ count: sql<number>`count(*)` })
           .from(lessons)
           .innerJoin(modules, eq(lessons.moduleId, modules.id))
-          .where(eq(modules.courseId, course.id));
+          .where(
+            and(
+              eq(modules.courseId, course.id),
+              eq(modules.sourceLanguage, course.sourceLanguage)
+            )
+          );
 
         return {
           ...course,
@@ -74,6 +85,7 @@ export async function POST(request: NextRequest) {
       level,
       language,
       price,
+      sourceLanguage,
       thumbnailUrl,
       isPublished = false,
       // Meta fields
@@ -92,6 +104,9 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    const normalizedSourceLanguage: "en" | "fr" =
+      sourceLanguage === 'fr' ? 'fr' : 'en';
+
     // Create course
     const newCourse = await db.insert(courses).values({
       title: title.trim(),
@@ -99,6 +114,7 @@ export async function POST(request: NextRequest) {
       level: level || 'Beginner',
       language: language || 'Lingala',
       price: price || '29.99',
+      sourceLanguage: normalizedSourceLanguage,
       thumbnailUrl,
       isPublished,
     }).returning();
